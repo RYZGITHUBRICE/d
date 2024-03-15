@@ -1,0 +1,104 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "RYZ Hub ", HidePremium = false, SaveConfig = true, ConfigFolder = "RYZHUB"})
+
+-- Values 
+_G.autoClick = false
+_G.autoRebirth = false
+_G.autoHatch = true
+_G.selectEgg = "Common Egg"
+
+-- Functions
+function autoClick()
+   while _G.autoClick do
+      game:GetService("ReplicatedStorage").Events.Click:FireServer()
+      wait(.00000000000000000000000001)
+   end
+end
+
+function autoRebirth()
+   while _G.autoRebirth do
+      game:GetService("ReplicatedStorage").Events.Rebirth:FireServer()
+      wait(.00000000000000000000000001)
+   end
+end
+
+
+  function autoHatch()
+   while _G.autoHatch == true do
+game:GetService("ReplicatedStorage").Events.PetEggOpen:FireServer(_G.selectEgg,1)
+wait(.00000000000000000000000001)
+end
+end
+
+local FarmTab = Window:MakeTab({
+   Name = "Farm",
+   Icon = "rbxassetid://4483345998",
+   PremiumOnly = false
+})
+
+local EggsTab = Window:MakeTab({
+   Name = "Auto Hatch",
+   Icon = "rbxassetid://4483345998",
+   PremiumOnly = false
+})
+
+
+FarmTab:AddToggle({
+   Name = "Auto Clicker",
+   Default = false,
+   Callback = function(Value)
+      _G.autoClick = Value
+      if Value then
+         autoClick()
+      end
+   end    
+})
+
+
+FarmTab:AddToggle({
+   Name = "Auto Rebirth",
+   Default = false,
+   Callback = function(Value)
+      _G.autoRebirth = Value
+      if Value then
+         autoRebirth()
+      end
+   end
+})
+
+
+
+EggsTab:AddToggle({
+   Name = "Auto Hatch",
+   Default = false,
+   Callback = function(Value)
+      -- Implement autoHatch functionality here
+      _G.autoHatch = Value
+   autoHatch()
+   end
+})
+
+
+-- drop downs
+
+EggsTab:AddDropdown({
+Name = "Pick a  Egg",
+Default = "Common Egg",
+Options = {"Common Egg", "Cow  Egg"},
+Callback = function(Value)
+   _G.selectEgg = Value
+   print(_G.selectEgg)
+
+
+end    
+})
+
+
+
+
+
+
+OrionLib:Init() 
+
+
+
